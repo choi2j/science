@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>10519 최이준</title>
+	</head>
+	<body>
+		<div class="wrapper">
+			<h1>DNA -> RNA</h1>
+			<div class="input">
+				<h3>DNA의 주형가닥을 입력하세요</h3>
+				<textarea name="" id="entry" placeholder="여기에 입력 _" onkeyup="changer(this.value.split(''))"></textarea>
+			</div>
+			<div class="output_rna">
+				<h3>전사한 RNA의 염기(코돈)</h3>
+				<div id="rna"></div>
+			</div>
+			<div class="output_pro">
+				<h3>번역한 단백질</h3>
+				<div id="pro"></div>
+			</div>
+		</div>
+	</body>
+
+	<script>
+		const docQ = (e) => {
+			return document.querySelector(e);
+		};
+
+		const dna = docQ("#dna");
+		const rna = docQ("#rna");
+
+		const changer = (val) => {
+			console.log(val);
+			let pro_val = [];
+			let rna_val = [];
+
+			for (let i = 0; i < val.length; i++) {
+				if (val[i] == "A" || val[i] == "a") {
+					rna_val.push("U");
+				} else if (val[i] == "T" || val[i] == "t") {
+					rna_val.push("A");
+				} else if (val[i] == "C" || val[i] == "c") {
+					rna_val.push("G");
+				} else if (val[i] == "G" || val[i] == "g") {
+					rna_val.push("C");
+				}
+			}
+
+            for (let i = 0; i < rna_val.length; i += 3) {
+					let temp = [];
+					temp.push(rna_val[i]);
+					temp.push(rna_val[i + 1]);
+					temp.push(rna_val[i + 2]);
+					let tempStr = temp.join("");
+					if (tempStr == "UUU" || tempStr == "UUC") pro_val.push("페닐알라닌");
+					else if (tempStr == "UUA" || tempStr == "UUG" || tempStr == "CUU" || tempStr == "CUC" || tempStr == "CUA" || tempStr == "CUG") pro_val.push("류신");
+					else if (tempStr == "AUU" || tempStr == "AUC" || tempStr == "AUA") pro_val.push("이소류신");
+					else if (tempStr == "AUG") pro_val.push("메티오닌");
+					else if (tempStr == "GUU" || tempStr == "GUC" || tempStr == "GUA" || tempStr == "GUG") pro_val.push("발린");
+					else if (tempStr == "UCU" || tempStr == "UCC" || tempStr == "UCA" || tempStr == "UCG" || tempStr == "AGU" || tempStr == "AGC") pro_val.push("세린");
+					else if (tempStr == "CCU" || tempStr == "CCC" || tempStr == "CCA" || tempStr == "CCG") pro_val.push("프롤린");
+					else if (tempStr == "ACU" || tempStr == "ACC" || tempStr == "ACA" || tempStr == "ACG") pro_val.push("트레오닌");
+					else if (tempStr == "GCU" || tempStr == "GCC" || tempStr == "GCA" || tempStr == "GCG") pro_val.push("알라닌");
+					else if (tempStr == "UAU" || tempStr == "UAC") pro_val.push("티로신");
+					else if (tempStr == "CAU" || tempStr == "CAC") pro_val.push("히스티딘");
+					else if (tempStr == "CAA" || tempStr == "CAG") pro_val.push("글루타민");
+					else if (tempStr == "AAU" || tempStr == "AAC") pro_val.push("아스파라긴");
+					else if (tempStr == "AAA" || tempStr == "AAG") pro_val.push("리신");
+					else if (tempStr == "GAU" || tempStr == "GAC") pro_val.push("아스파르트산");
+					else if (tempStr == "GAA" || tempStr == "GAG") pro_val.push("글루탐산");
+					else if (tempStr == "UGU" || tempStr == "UGC") pro_val.push("시스테인");
+					else if (tempStr == "UGG") pro_val.push("트립토판");
+					else if (tempStr == "CGU" || tempStr == "CGC" || tempStr == "CGA" || tempStr == "CGG" || tempStr == "AGA" || tempStr == "AGG") pro_val.push("아르기닌");
+					else if (tempStr == "GGU" || tempStr == "GGC" || tempStr == "GGA" || tempStr == "GGG") pro_val.push("글리신");
+				}
+			pro.innerText = pro_val.join(" ");
+			rna.innerText = rna_val.join("");
+		};
+	</script>
+
+	<style>
+		@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+		* {
+			font-family: Pretendard;
+		}
+
+		html,
+		body {
+			height: 100%;
+			width: 100%;
+			margin: 0;
+		}
+
+		.wrapper {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.input,
+		.output_pro,
+		.output_rna {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			height: 25%;
+			width: 50%;
+			padding: 1rem;
+			margin: 1rem;
+			background: #eee;
+			box-sizing: border-box;
+			border-radius: 10px;
+			box-shadow: #88888880 5px 5px 5px;
+		}
+
+		h3 {
+			color: white;
+		}
+
+		.input {
+			background: #4848ff;
+		}
+
+		.output_pro {
+			background: #b048ff;
+		}
+
+		.output_rna {
+			background: #ff4848;
+		}
+
+		.input #entry,
+		.output_pro #pro,
+		.output_rna #rna {
+			background: white;
+			border: none;
+			border-radius: 10px;
+			outline: none;
+			resize: none;
+			display: block;
+			width: 100%;
+			height: 100%;
+			overflow-y: scroll;
+			padding: 1rem;
+			box-sizing: border-box;
+            word-break: break-all;
+		}
+	</style>
+</html>
